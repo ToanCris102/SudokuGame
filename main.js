@@ -2,7 +2,8 @@
 //Declare 
 let selectedNum, selectedTile, disableSelect, lives;
 let timeRemaining, timer;
-let stop = false;
+let stop = false; // variable test lives Remainning and Time lives
+let pen = false; // variable test pen has used
 let solution = [];
 let gridSudoku = [
     [0,0,0,0,0,0,0,0,0],
@@ -165,8 +166,8 @@ function startGame() {
     let board;
     board = createGrid();
     //Create board based on difficulty
-    lives = 3;
-    id("lives").textContent = "Lives Remainning: " + lives;
+    lives = 4;
+    id("lives").textContent = "Lives Remainning: " + (lives-1);
     //Create board based on difficulty
     generateBoard(board);
     //Start the time 
@@ -255,6 +256,7 @@ function generateBoard(board) {
     for (let i = 0; i < 81; i++){
         //Create a new paragraph elements
         let tile = document.createElement("p");
+        
         //If tile has number == 0
         if (board[i] != 0) {
             //Set tile text to correct number
@@ -294,8 +296,20 @@ function generateBoard(board) {
         if((tile.id + 1) % 9 == 3 || (tile.id + 1) % 9 == 6) {
             tile.classList.add("rightBorder");
         }
+        if ((tile.id >= 0 && tile.id < 9)){
+            tile.classList.add("topBorder");
+        }
+        if (tile.id % 9 === 0){
+            tile.classList.add("leftBorder");
+        }
+        if ((tile.id+1) % 9 === 0){
+            tile.classList.add("rightBorder");
+        }
         //Add tile to board
         id("board").appendChild(tile);
+        if ((tile.id >= 72 && tile.id < 81)){
+            tile.classList.add("bottomBorder");
+        }
     }
 }
 
@@ -332,7 +346,7 @@ function updateMove() {
                 }else {
                     //If lives is not equal to zero
                     //Update lives text
-                    id("lives").textContent = "Lives Remainning: " + lives;
+                    id("lives").textContent = "Lives Remainning: " + (lives-1);
                     //Renable selecting numbers and tiles
                     disableSelect = false;
                 }
@@ -395,11 +409,28 @@ function clearPrevious() {
     selectedTile = null;
     selectedNum = null;
     disableSelect = false;
+    //Set note write
+    if(!id("number-option").children[0].classList.contains("pen-off")) {
+        id("number-option").children[0].classList.remove("pen-on");
+        id("number-option").children[0].classList.add("pen-off");   
+    }
 }
 
 // helper Function
+function noteWrite() {
+    if(id("number-option").children[0].classList.contains("pen-off")) {
+        id("number-option").children[0].classList.add("pen-on");
+        id("number-option").children[0].classList.remove("pen-off");   
+        pen = true;     
+    } else {
+        id("number-option").children[0].classList.remove("pen-on");
+        id("number-option").children[0].classList.add("pen-off");  
+        pen = false;
+    }
+
+}
+
 function playPause() {
-    console.log("Click Click");
     if(id("play-pause").children[0].classList.contains("btn-play")){
         id("play-pause").children[0].classList.remove("btn-play");
         id("play-pause").children[0].classList.add("btn-pause");        

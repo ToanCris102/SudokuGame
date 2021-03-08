@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,11 @@
     <script src='main.js' ></script>
 </head>
 <header>
-    <h1>Sudoku</h1>
+    <h1>Sudoku</h1>    
     <div id="setup-game">
+        <section>
+            <p id="lives"></p>
+        </section>
         <section id="time">
             <h3>Time lives</h3>
             <section>
@@ -30,10 +34,8 @@
     
 </header>
 <body>
-    <div id="wrap">        
-        <div id="stats">
-            <p id="lives"></p>
-        </div>
+    <div id="wrap">     
+        
         <div id="game">
             <div id="board"></div>
             <div id="number-container" class="hidden">
@@ -46,6 +48,10 @@
                 <p id="seven">7</p>
                 <p id="eight">8</p>
                 <p id="nine">9</p>
+                <div id="number-option">
+                    <button class="pen-off" onclick="noteWrite()"></button>
+                    <button class="delete"></button>
+            </div>
             </div>
         </div>
     </div>
@@ -55,3 +61,4 @@
         <p>Made by Trịnh Tấn Toàn &nbsp;-&nbsp; Instructor:<i> Trương Thị Thanh Tuyền</i></p>
     </footer>
 </html>
+
