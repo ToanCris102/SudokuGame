@@ -152,21 +152,35 @@ p#lives {
     line-height: 80px;
 }
 
+#number-container p:hover{
+    background-color: #49599a;
+    cursor: pointer;
+}
+
+#number-container button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 #number-option button {
     width: 80px;
     height: 80px;
     margin: 0;
     padding: 0;
 }
+
 .pen-off {
     background-image: url(158467734_1144706486040471_4698769863524688849_n.png);
 }
+
 .pen-on {
     background-image: url(158292483_771467476722194_3564284464715627126_n.png);
 }
+
 .delete {
     background-image: url(Capture.PNG);
 }
+
 #board {    
     margin-top: auto;
     display: flex;
@@ -185,11 +199,16 @@ p#lives {
     height: 70px;
     text-align: center;
     margin: 0px;
-    line-height: 70px;
+    line-height: normal;
     vertical-align: middle;
     font-size: 40pt;
     position: relative;
     z-index: 1;
+}
+
+.tile:hover {
+    background-color: #49599a;
+    cursor: pointer;
 }
 
 p.selected {

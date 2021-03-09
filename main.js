@@ -119,17 +119,15 @@ function deleteElement(grid){
 
 // Above build the solution grid sudoku
 
-// function printGrid(grid) {
-//     let res = "";
+function printGrid(grid) {
+    let res = "";
 
-//     for (let i = 0; i < 9; i++) {
-//         for (let j = 0; j < 9; j++) {
-//             res += grid[i][j] + "  ";
-//         }
-//         res += "\n";
-//     }
-//     console.log(res);
-// }
+    for (let i = 0; i < 81; i++) {
+        res += grid[i] + "  ";
+        if((i + 1)%9 ===0 ) res += "\n";        
+    }
+    console.log(res);
+}
 
 
 //Main function for sudoku game
@@ -151,7 +149,7 @@ window.onload = function() {
                     //Deselected all other numbers
                     for (let i = 0; i < 9; i ++) {
                         id("number-container").children[i].classList.remove("selected"); // 146 != 219
-                    }
+                    }//if only tile is selected
                     //Select it and update selectedNum Variable
                     this.classList.add("selected");
                     selectedNum = this;
@@ -236,7 +234,7 @@ function createGrid(){
             solution.push(grid[i][j]);
         }
     }
-    console.log(solution);
+    printGrid(solution);
     gridSudoku = deleteElement(grid);
     for(let i = 0; i < 9; i++){
         for(let j = 0; j < 9; j++){
@@ -244,7 +242,6 @@ function createGrid(){
             board.push(grid[i][j]);
         }
     }
-    console.log(grid);
     return board;
 }
 function generateBoard(board) {
@@ -278,7 +275,7 @@ function generateBoard(board) {
                         }
                         // Add selection and update variable
                         tile.classList.add("selected");
-                        selectedTile = tile;
+                        selectedTile = tile;                        
                         updateMove();
                     }
                 }
@@ -290,6 +287,7 @@ function generateBoard(board) {
         idCount ++;
         //Add tile class to all tiles
         tile.classList.add("tile");
+        //Add border
         if ((tile.id > 17 && tile.id < 27) || (tile.id > 44 && tile.id < 54)){
             tile.classList.add("bottomBorder");
         }
@@ -315,9 +313,20 @@ function generateBoard(board) {
 
 function updateMove() {
     //If a tile and a number is selected
-    if(selectedTile && selectedNum) {
-        //Set the tile to the correct number
-        selectedTile.textContent = selectedNum.textContent;
+    if(selectedTile && selectedNum) {        
+        deletePen(selectedTile);
+        //If pen === true update class .tile        
+        if(pen === true) {                
+            selectedTile.style.fontSize = "16pt";         
+            if(!selectedTile.textContent.match(selectedNum.textContent)){
+                selectedTile.textContent += " "+selectedNum.textContent;
+            }
+            
+        }else{
+            //Set the tile to the correct number
+            selectedTile.style.fontSize = "40pt";
+            selectedTile.textContent = selectedNum.textContent;
+        }
         //If the number matches the corresponding number in the solution key
         if (checkCorrect(selectedTile)) {
             //Deselects the tiles
@@ -386,7 +395,7 @@ function checkDone() {
 function checkCorrect(tile) {
     //If tile's number is equal to solution's 
     console.log(solution[tile.id] , tile.textContent);
-    if(solution[tile.id] == tile.textContent) return true;
+    if(solution[tile.id] == tile.textContent || pen === true) return true;
     else return false; 
 }
 
@@ -417,6 +426,17 @@ function clearPrevious() {
 }
 
 // helper Function
+function deletePen(selectedTile){
+    id("number-option").children[1].addEventListener("click", function(){
+        if(selectedTile.classList.contains("selected")) {
+            selectedTile.textContent = "";
+            selectedTile.classList.remove("selected");
+        }
+    });
+
+}
+
+
 function noteWrite() {
     if(id("number-option").children[0].classList.contains("pen-off")) {
         id("number-option").children[0].classList.add("pen-on");
