@@ -6,7 +6,7 @@
 html {
     position: relative;
     min-height: 100%;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 
@@ -16,18 +16,24 @@ html {
 
 body {
     background-image: url(hinh-anh-background-dep-don-gian_102938083.jpg);
+    max-width: 100%;
+    display: block;
+    height: auto;
 }
 
 body.dark {
     background-image: url(hinh-nen-den-trang-dien-thoai-1.jpg);
     color: white;
     z-index: -99;
+    max-width: 100%;
+    display: block;
+    height: auto;
 }
 
 header {
     background-color: darkred;
     color: white;
-    height: 80px;
+    height: 70px;
     position: relative;
     top: 0;
     z-index: 100;
@@ -44,8 +50,8 @@ header button {
 header h1 {
     display: inline-block;
     font-size: 40pt;
-    line-height: 80px;
-    padding-left: 50px;
+    line-height: 70px;
+    padding-left: 30px;
     justify-content: left;
     position: relative;
     clear: left;
@@ -60,7 +66,7 @@ header section {
 header h3 {
     justify-content: left;
     padding: 0;
-    margin-top: 20px;
+    margin-top: 13px;
     margin-right: 20px;
     margin-bottom: 5px;
     position: sticky;
@@ -110,18 +116,18 @@ button {
 }
 
 p#timer {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
     
 }
 
 p#lives {
-    font-size: 20pt;
+    font-size: 18pt;
     font-weight: bold;
     text-align: center;
     position: relative;
-    line-height: 80px;
+    line-height: 70px;
     
 }
 
@@ -135,7 +141,7 @@ p#lives {
     position: absolute;
     width: 250px;
     top: 40%;
-    right: -65%;
+    right: -70%;
     z-index: 10;
     transform: translateX(-50%) translateY(-50%);
 }
@@ -145,7 +151,7 @@ p#lives {
     border-radius: 10%;
     width: 80px;
     height: 80px;
-    font-size: 40pt;
+    font-size: 35pt;
     text-align: center;
     float: left;
     display: block;
@@ -158,7 +164,7 @@ p#lives {
 }
 
 #number-container button:hover {
-    opacity: 0.8;
+    opacity: 0.5;
     cursor: pointer;
 }
 
@@ -187,7 +193,7 @@ p#lives {
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-start;
-    width: 700px;
+    width: 550px;
     height: auto;
     position: relative;    
     justify-content: center;
@@ -195,18 +201,18 @@ p#lives {
 
 .tile {
     border: 1px solid darkred;
-    width: 70px;
-    height: 70px;
+    width: 55px;
+    height: 55px;
     text-align: center;
     margin: 0px;
     line-height: normal;
     vertical-align: middle;
-    font-size: 40pt;
+    font-size: 35pt;
     position: relative;
     z-index: 1;
 }
 
-.tile:hover {
+.tile:hover:empty {
     background-color: #49599a;
     cursor: pointer;
 }

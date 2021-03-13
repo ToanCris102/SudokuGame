@@ -260,7 +260,7 @@ function generateBoard(board) {
             tile.textContent = board[i];
         } else {
             //Add click event listener to tile
-            tile.addEventListener("click", function() {
+            tile.addEventListener("click", function click() {
                 //If selecting is not disabled
                 if(!disableSelect) {
                     //If the tile is already selected
@@ -275,8 +275,19 @@ function generateBoard(board) {
                         }
                         // Add selection and update variable
                         tile.classList.add("selected");
-                        selectedTile = tile;                        
-                        updateMove();
+                        //Delete event when check true
+                        // if(pen === true && solution[tile.id] == tile.textContent) {
+                        //     if(solution[tile.id] == tile.textContent && pen === false) tile.removeEventListener("click", click()); 
+                        // }                        
+                        console.log(tile.style.fontStyle);
+                        selectedTile = tile;                                                                                          
+                        updateMove(tile);
+                        try {
+                            var font = selectedTile.style.fontSize;                  
+                            if(tile.textContent !== "" && font === "35pt") tile.removeEventListener("click", click());
+                        } catch (error) {
+                            
+                        }
                     }
                 }
             });
@@ -311,24 +322,26 @@ function generateBoard(board) {
     }
 }
 
-function updateMove() {
+function updateMove(tile) {
     //If a tile and a number is selected
-    if(selectedTile && selectedNum) {        
+    if(selectedTile && selectedNum && (Number(selectedNum.textContent) > 0 && Number(selectedNum.textContent) <= 9)) {        
         deletePen(selectedTile);
         //If pen === true update class .tile        
         if(pen === true) {                
-            selectedTile.style.fontSize = "16pt";         
+            selectedTile.style.fontSize = "12pt";         
             if(!selectedTile.textContent.match(selectedNum.textContent)){
                 selectedTile.textContent += " "+selectedNum.textContent;
             }
             
         }else{
             //Set the tile to the correct number
-            selectedTile.style.fontSize = "40pt";
+            selectedTile.style.fontSize = "35pt";
+            selectedTile.style.hover = "black";
             selectedTile.textContent = selectedNum.textContent;
         }
         //If the number matches the corresponding number in the solution key
-        if (checkCorrect(selectedTile)) {
+        if (checkCorrect(selectedTile)) {       
+            
             //Deselects the tiles
             selectedTile.classList.remove("selected");
             selectedNum.classList.remove("selected");
@@ -338,7 +351,7 @@ function updateMove() {
             //Check if board is completed
             if(checkDone()) {
                 endGame();
-            }
+            }            
             //If the number does not match the solution key
         } else {
             //Disable selecting new numbers for one second
@@ -394,8 +407,9 @@ function checkDone() {
 
 function checkCorrect(tile) {
     //If tile's number is equal to solution's 
-    console.log(solution[tile.id] , tile.textContent);
-    if(solution[tile.id] == tile.textContent || pen === true) return true;
+    if(solution[tile.id] == tile.textContent || pen === true){         
+        return true;
+    } 
     else return false; 
 }
 
