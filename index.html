@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,19 +11,23 @@
 <header>
     <h1>Sudoku</h1>    
     <div id="setup-game">
-        <section>
+        <section id="section-lives">
             <p id="lives"></p>
         </section>
         <section id="time">
-            <h3>Time lives</h3>
-            <section>
-                <p id="timer">20:00</p>
-            </section>
+            <h3>Time lives</h3>            
+            <p id="timer">20:00</p>
         </section>
         <section id="theme">
-            <h3>Choose Theme</h3>
+            <h3>Choose theme</h3>
             <label for="#"><input id="theme-2" type="radio" name="theme" value="Dark" checked>Dark</label>
             <label for="#"><input id="theme-1" type="radio" name="theme" value="Light">Light</label>
+        </section>
+        <section id="diff">
+            <h3>Choose difficulty</h3>
+            <label for="#"><input id="diff-1" type="radio" name="diff" value="Easy" checked>Easy</label>
+            <label for="#"><input id="diff-2" type="radio" name="diff" value="Medium">Medium</label>
+            <label for="#"><input id="diff-3" type="radio" name="diff" value="Hard">Hard</label>
         </section>
         <section>
             <h3><button id="start-btn" value="start-btn">New Game</button></h3>

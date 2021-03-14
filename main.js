@@ -1,10 +1,10 @@
-"use strict";
 //Declare 
 let selectedNum, selectedTile, disableSelect, lives;
 let timeRemaining, timer;
 let stop = false; // variable test lives Remainning and Time lives
 let pen = false; // variable test pen has used
 let solution = [];
+let difficulty;
 let gridSudoku = [
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
@@ -29,13 +29,11 @@ let grid = [
     [0,0,0,0,0,0,0,0,0]
 ];
 
-// recursive algo
+// backtrack find solution sudoku
 function solveSudoku(grid, row, col) {
     let cell = findUnassignedLocation(grid, row, col);
     row = cell[0];
     col = cell[1];
-
-    // base case: if no empty cell  
     if (row == -1) {
         console.log("solved");
         return true;
@@ -50,23 +48,19 @@ function solveSudoku(grid, row, col) {
             if ( solveSudoku(grid, row, col) ) {                
                 return true;
             }
-
-            // mark cell as empty (with 0)    
             grid[row][col] = 0;
         }
     }
-
-    // trigger back tracking
     return false;
 }
 //Shuffle Array 1 - 9
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];  //ES6
+        [array[i], array[j]] = [array[j], array[i]];  
     }
 }
-//Find unassigned location (0)
+//Find unassigned location
 function findUnassignedLocation(grid, row, col) {   
     for (; row < 9 ; col = 0, row++)
     for (; col < 9 ; col++)
@@ -104,12 +98,12 @@ function isBoxOk(grid, row, col, num) {
 
     return true;
 }
-
+//easy-5  medium-9 hard- 100
 function deleteElement(grid){
     let gridDelete = grid;  
-    let num = [0,1,2,3,4,5,6,7,8];
+    let num = [0,1,2,3,4,5,6,7,8];    
     for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
+        for (let j = 0; j < difficulty; j++) {
             shuffleArray(num);
             gridDelete[i][num[j]] = 0;
         }
@@ -118,7 +112,6 @@ function deleteElement(grid){
 }
 
 // Above build the solution grid sudoku
-
 function printGrid(grid) {
     let res = "";
 
@@ -162,6 +155,13 @@ window.onload = function() {
 
 function startGame() {
     let board;
+    //Set difficulty for grid
+    if(id("diff-1").checked){
+        difficulty = 5;
+    }else if(id("diff-2").checked) {
+        difficulty = 9;
+    }else
+        difficulty = 100;
     board = createGrid();
     //Create board based on difficulty
     lives = 4;
@@ -175,7 +175,7 @@ function startGame() {
         qs("body").classList.remove("dark");
     } else {
         qs("body").classList.add("dark");
-    }
+    }    
     //Show number container
     id("number-container").classList.remove("hidden");      
 }
@@ -279,7 +279,6 @@ function generateBoard(board) {
                         // if(pen === true && solution[tile.id] == tile.textContent) {
                         //     if(solution[tile.id] == tile.textContent && pen === false) tile.removeEventListener("click", click()); 
                         // }                        
-                        console.log(tile.style.fontStyle);
                         selectedTile = tile;                                                                                          
                         updateMove(tile);
                         try {
