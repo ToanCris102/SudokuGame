@@ -194,6 +194,10 @@ p#lives {
     background-image: url(Capture.PNG);
 }
 
+.solution {
+    background-image: url(Capture2.PNG);
+}
+
 #board {    
     margin-top: auto;
     display: flex;

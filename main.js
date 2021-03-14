@@ -64,7 +64,7 @@ function shuffleArray(array) {
 function findUnassignedLocation(grid, row, col) {   
     for (; row < 9 ; col = 0, row++)
     for (; col < 9 ; col++)
-        if (grid[row][col] == 0)
+        if (grid[row][col] == 0) 
             return [row, col];
     return [-1, -1];
 }
@@ -159,9 +159,9 @@ function startGame() {
     if(id("diff-1").checked){
         difficulty = 5;
     }else if(id("diff-2").checked) {
-        difficulty = 9;
+        difficulty = 7;
     }else
-        difficulty = 100;
+        difficulty = 18;
     board = createGrid();
     //Create board based on difficulty
     lives = 4;
@@ -234,7 +234,7 @@ function createGrid(){
             solution.push(grid[i][j]);
         }
     }
-    printGrid(solution);
+//    printGrid(solution);
     gridSudoku = deleteElement(grid);
     for(let i = 0; i < 9; i++){
         for(let j = 0; j < 9; j++){
@@ -439,6 +439,20 @@ function clearPrevious() {
 }
 
 // helper Function
+
+function createSolution() {
+    if(confirm("Bạn chắc chưa! Nếu đồng ý, đồng nghĩa với việc hôm nay bạn không thông minh hơn học sinh lớp 5.")){
+        for(let i = 0; i < 81; i++) {
+            if(qsa(".tile")[i].textContent == '' || qsa(".tile")[i].style.fontSize == "12pt"){
+                qsa(".tile")[i].style.fontSize = '35pt';
+                qsa(".tile")[i].style.color = "red";
+                qsa(".tile")[i].textContent = solution[i];
+            }
+        }    
+    }
+
+}
+
 function deletePen(selectedTile){
     id("number-option").children[1].addEventListener("click", function(){
         if(selectedTile.classList.contains("selected")) {
