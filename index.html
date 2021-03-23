@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sudoku</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js' ></script>
+</head>
+<header>
+    <h1>Sudoku</h1>
+    <section id="section-lives">
+        <p id="lives"></p>
+    </section>
+    <section class="menu-section">
+        <div class="menu"></div>
+    </section>    
+    <div id="setup-game" class="setup-game">        
+        
+        <section id="theme">
+            <h3>Choose theme</h3>
+            <label for="#"><input id="theme-2" type="radio" name="theme" value="Dark" checked>Dark</label>
+            <label for="#"><input id="theme-1" type="radio" name="theme" value="Light">Light</label>
+        </section>
+        <section id="diff">
+            <h3>Choose difficulty</h3>
+            <label for="#"><input id="diff-1" type="radio" name="diff" value="Easy" checked>Easy</label>
+            <label for="#"><input id="diff-2" type="radio" name="diff" value="Medium">Medium</label>
+            <label for="#"><input id="diff-3" type="radio" name="diff" value="Hard">Hard</label>
+        </section>
+        <section>
+            <h3><button id="start-btn" value="start-btn">New Game</button></h3>
+            <label id="play-pause"><button class="btn-play" onclick="playPause()"></button></label>
+        </section>
+    </div>
+    <script>
+        const menu = document.querySelector(".menu-section");
+        const setup_game = document.querySelector(".setup-game");
+        menu.addEventListener("click", function (e) {
+          setup_game.classList.toggle("show");
+          menu.classList.toggle("show");
+        });
+    </script>
+    
+</header>
+<body>
+    <div id="wrap">     
+        <section id="time" class="hidden">                     
+            <p id="timer">20:00</p>
+        </section>
+        <div id="game">
+            <div id="board"></div>
+            <div id="number-container" class="hidden">
+                <p id="one">1</p>
+                <p id="two">2</p>
+                <p id="three">3</p>
+                <p id="four">4</p>
+                <p id="five">5</p>
+                <p id="six">6</p>
+                <p id="seven">7</p>
+                <p id="eight">8</p>
+                <p id="nine">9</p>
+                <div id="number-option">
+                <button class="pen-off" onclick="noteWrite()"></button>
+                <button class="delete"></button>
+                <button class="solution" onclick="createSolution()"></button>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+    <footer>
+        <p>Made by Trịnh Tấn Toàn &nbsp;-&nbsp; Instructor:<i> Trương Thị Thanh Tuyền</i></p>
+    </footer>
+</html>
+

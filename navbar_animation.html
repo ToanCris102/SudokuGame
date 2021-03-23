@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Navbar</title>
+  </head>
+  <body>
+    <div class="menu-section">
+      <div class="menu"></div>
+    </div>
+    <div class="container">
+      <nav class="navbar">
+        <a href="#" class="logo">
+          CODEMON
+        </a>
+        <div class="navs">
+          <a href="#">Home</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+          <a href="#">Product</a>
+        </div>
+      </nav>
+    </div>
+    <script>
+      const menu = document.querySelector(".menu-section");
+      const navs = document.querySelector(".navs");
+      menu.addEventListener("click", function (e) {
+        navs.classList.toggle("show");
+        menu.classList.toggle("show");
+      });
+    </script>
+  </body>
+</html>
