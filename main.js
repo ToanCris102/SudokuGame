@@ -1,6 +1,7 @@
 //Declare 
 let selectedNum, selectedTile, disableSelect, lives;
 let timeRemaining, timer;
+let resultSet = [], arr = []; // set result for auto
 let stop = false; // variable test lives Remainning and Time lives
 let pen = false; // variable test pen has used
 let solution = [];
@@ -35,7 +36,6 @@ function solveSudoku(grid, row, col) {
     row = cell[0];
     col = cell[1];
     if (row == -1) {
-        console.log("solved");
         return true;
     }
     let numb = [1,2,3,4,5,6,7,8,9];
@@ -53,14 +53,14 @@ function solveSudoku(grid, row, col) {
     }
     return false;
 }
-//Shuffle Array 1 - 9
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];  
     }
 }
-//Find unassigned location
+
 function findUnassignedLocation(grid, row, col) {   
     for (; row < 9 ; col = 0, row++)
     for (; col < 9 ; col++)
@@ -98,7 +98,7 @@ function isBoxOk(grid, row, col, num) {
 
     return true;
 }
-//easy-5  medium-9 hard- 100
+//easy-5  medium-8 hard- 30
 function deleteElement(grid){
     let gridDelete = grid;  
     let num = [0,1,2,3,4,5,6,7,8];    
@@ -141,9 +141,8 @@ window.onload = function() {
                 } else {
                     //Deselected all other numbers
                     for (let i = 0; i < 9; i ++) {
-                        id("number-container").children[i].classList.remove("selected"); // 146 != 219
-                    }//if only tile is selected
-                    //Select it and update selectedNum Variable
+                        id("number-container").children[i].classList.remove("selected"); 
+                    }
                     this.classList.add("selected");
                     selectedNum = this;
                     updateMove();
@@ -154,14 +153,14 @@ window.onload = function() {
 }
 
 function startGame() {
-    let board;
+    let board;    
     //Set difficulty for grid
     if(id("diff-1").checked){
         difficulty = 5;
     }else if(id("diff-2").checked) {
-        difficulty = 7;
+        difficulty = 8;
     }else
-        difficulty = 18;
+        difficulty = 30;
     board = createGrid();
     //Create board based on difficulty
     lives = 4;
@@ -177,7 +176,9 @@ function startGame() {
         qs("body").classList.add("dark");
     }    
     //Show number container
-    id("number-container").classList.remove("hidden");      
+    id("number-container").classList.remove("hidden");  
+    //Show time live 
+    id("time").classList.remove("hidden"); 
 }
 
 function startTimer() {
@@ -282,8 +283,8 @@ function generateBoard(board) {
                         selectedTile = tile;                                                                                          
                         updateMove(tile);
                         try {
-                            var font = selectedTile.style.fontSize;                  
-                            if(tile.textContent !== "" && font === "35pt") tile.removeEventListener("click", click());
+                            let font = selectedTile.style.fontSize;                  
+                            if(tile.textContent !== "" && font === "35pt" || font === "25pt") tile.removeEventListener("click", click());
                         } catch (error) {
                             
                         }
@@ -327,14 +328,15 @@ function updateMove(tile) {
         deletePen(selectedTile);
         //If pen === true update class .tile        
         if(pen === true) {                
-            selectedTile.style.fontSize = "12pt";         
+            selectedTile.style.fontSize = "8pt"; 
             if(!selectedTile.textContent.match(selectedNum.textContent)){
                 selectedTile.textContent += " "+selectedNum.textContent;
             }
             
         }else{
             //Set the tile to the correct number
-            selectedTile.style.fontSize = "35pt";
+            selectedTile.style.fontSize = ""; 
+            
             selectedTile.style.hover = "black";
             selectedTile.textContent = selectedNum.textContent;
         }
@@ -351,24 +353,16 @@ function updateMove(tile) {
             if(checkDone()) {
                 endGame();
             }            
-            //If the number does not match the solution key
         } else {
             //Disable selecting new numbers for one second
             disableSelect = true;
-            //Make the tile turn red
             selectedTile.classList.add("incorrect");
-            //Run in one second
             setTimeout(function (){ 
-                //Subtract lives by one
                 lives --;
-                //If no lives left end the game
                 if(lives === 0){
                     endGame();
                 }else {
-                    //If lives is not equal to zero
-                    //Update lives text
                     id("lives").textContent = "Lives Remainning: " + (lives-1);
-                    //Renable selecting numbers and tiles
                     disableSelect = false;
                 }
                 //Restore tile color and remove selected from both
@@ -406,10 +400,31 @@ function checkDone() {
 
 function checkCorrect(tile) {
     //If tile's number is equal to solution's 
-    if(solution[tile.id] == tile.textContent || pen === true){         
-        return true;
-    } 
-    else return false; 
+    // if(solution[tile.id] == tile.textContent || pen === true){         
+    //     return true;
+    // } 
+    // else return false; 
+    let temp_arr = [
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0]
+    ];
+    let i = 0;
+    for(let x = 0; x < 9; x++){
+        for(let y = 0; y < 9; y++){
+            if(qsa(".tile")[i].textContent != "" && qsa(".tile")[i].style.fontSize != '8pt' )
+                temp_arr[x][y] = parseInt(qsa(".tile")[i].textContent);
+            i++;
+        }
+    }   
+    console.log(solveSudoku(temp_arr,0,0));
+    return solveSudoku(temp_arr,0,0);
 }
 
 function clearPrevious() {
@@ -436,21 +451,88 @@ function clearPrevious() {
         id("number-option").children[0].classList.remove("pen-on");
         id("number-option").children[0].classList.add("pen-off");   
     }
+    arr = [];
+    resultSet = [];
 }
 
+
 // helper Function
-
-function createSolution() {
-    if(confirm("Bạn chắc chưa! Nếu đồng ý, đồng nghĩa với việc hôm nay bạn không thông minh hơn học sinh lớp 5.")){
-        for(let i = 0; i < 81; i++) {
-            if(qsa(".tile")[i].textContent == '' || qsa(".tile")[i].style.fontSize == "12pt"){
-                qsa(".tile")[i].style.fontSize = '35pt';
-                qsa(".tile")[i].style.color = "red";
-                qsa(".tile")[i].textContent = solution[i];
+async function createSolution() {  
+    if(confirm("You know: There is only one thing that makes a dream impossible to achieve: the fear of failure. Are you sure ?")){  
+        arr = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ];
+        let i = 0;
+        for(let x = 0; x < 9; x++){
+            for(let y = 0; y < 9; y++){
+                if(qsa(".tile")[i].textContent != "" && qsa(".tile")[i].style.fontSize != '8pt' )
+                    arr[x][y] = parseInt(qsa(".tile")[i].textContent);
+                else {
+                    qsa(".tile")[i].style.color = "red";
+                    qsa(".tile")[i].style.fontSize = "";
+                }
+                i++;
             }
-        }    
-    }
+        }
+        stop = true;
+        timeRemaining = 0;
+        endGame();
+        resultSet = [];
+        writeSolution(arr,0,0);
+            
+        let temp = findUnassignedLocation(arr,0,0);
+        if(temp[0] == -1) {
+            for(let i = 0; i < resultSet.length; i++){
+                let element = resultSet[i];        
+                await timeout(1);            
+                qsa(".tile")[element[0]].textContent = element[1];
+            }
+        }else{
+            resultSet = solution;
+            for(let i = 0; i < 81; i++){
+                await timeout(10); 
+                qsa(".tile")[i].textContent = resultSet[i];
+            }
+        }          
+    } 
+    
+}
 
+
+function writeSolution(grid, row, col) {           
+    let cell = findUnassignedLocation(grid, row, col);
+    row = cell[0];
+    col = cell[1];
+    if (row == -1) {
+        return true;
+    }
+    for (let num = 1; num <= 9; num++) {
+        if (noConflicts(grid, row, col, num) ) {             
+            grid[row][col] = num;             
+            resultSet.push([(row*9)+(col),num]);            
+            if (writeSolution(grid, row, col) ) {                
+                return true;
+            }
+            grid[row][col] = 0;             
+            resultSet.push([(row*9)+(col),'']); 
+        }
+        
+    }
+    return false;
+}
+
+
+
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function deletePen(selectedTile){
@@ -485,6 +567,33 @@ function playPause() {
             id("board").children[i].classList.add("hidden");
         }
         stop = true;
+        arr = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ];
+        let i = 0;
+        for(let x = 0; x < 9; x++){
+            for(let y = 0; y < 9; y++){
+                if(qsa(".tile")[i].textContent != "" && qsa(".tile")[i].style.fontSize != '8pt' )
+                    arr[x][y] = parseInt(qsa(".tile")[i].textContent);
+                else {
+                    qsa(".tile")[i].style.color = "red";
+                    qsa(".tile")[i].style.fontSize = "";
+                }
+                i++;
+            }
+        }
+        // let arr_temp = JSON.parse(arr);
+        // arr = JSON.stringify(arr_temp);
+        // console.log(arr_temp);
+      //  saveSudoku(,timeRemaining)
     } else {
         id("play-pause").children[0].classList.add("btn-play");
         for(let i = 0; i < id("board").children.length; i++) {
@@ -495,6 +604,24 @@ function playPause() {
 
 }
 
+function saveSudoku(list, time){
+    if (window.XMLHttpRequest) {
+        // code for modern browsers
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for old IE browsers
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        }
+    };    
+    xmlhttp.open("GET", "main.php/?list="+list+"&time="+time, true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+    xmlhttp.send();
+}
 
 let id = id => document.getElementById(id);
 

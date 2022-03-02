@@ -1,4 +1,5 @@
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
@@ -16,14 +17,13 @@ html {
 }
 
 body {
-    background-image: url(hinh-anh-background-dep-don-gian_102938083.jpg);
-    max-width: 100%;
+    background: url("hinh-anh-background-dep-don-gian_102938083.jpg") no-repeat center center/cover;
     display: block;
-    height: auto;
+    min-height: 100%;
 }
 
 body.dark {
-    background-image: url(hinh-nen-den-trang-dien-thoai-1.jpg);
+    background: url("hinh-nen-den-trang-dien-thoai-1.jpg") no-repeat center center/cover;
     color: white;
     z-index: -99;
     max-width: 100%;
@@ -40,6 +40,18 @@ header {
     z-index: 100;
 }
 
+.menu-section {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 header button {
     display: flex;
     justify-content: left;
@@ -50,20 +62,27 @@ header button {
 
 header h1 {
     display: inline-block;
-    font-size: 40pt;
+    flex: 1;
+    font-size: 4vw;
+
     line-height: 70px;
     padding-left: 30px;
     justify-content: left;
     position: relative;
     text-shadow: 2px 0px 5px brown;
+    z-index: 1;
+    width: 20%;
 }
 
 header section {
     justify-content: center;
-    position: relative;    
+    position: relative;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
 }
 
-#section-lives{
+#section-lives {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -86,7 +105,8 @@ header section p {
 .btn-pause {
     box-sizing: border-box;
     border-width: 10px 0px 10px 16px;
-    border-color: transparent transparent transparent #202020;
+    border-color: transparent transparent transparent white;
+    background-color: transparent;
     margin-left: 40px;
     width: 20px;
     height: 20px;
@@ -126,16 +146,16 @@ p#timer {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    
+
 }
 
 p#lives {
-    font-size: 18pt;
+    font-size: 2vw;
     font-weight: bold;
     text-align: center;
     position: relative;
     line-height: 70px;
-    
+
 }
 
 #game {
@@ -165,48 +185,56 @@ p#lives {
     line-height: 80px;
 }
 
-#number-container p:hover{
+#number-container p:hover {
     background-color: #49599a;
     cursor: pointer;
 }
 
 #number-container button:hover {
     opacity: 0.5;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 #number-option button {
-    width: 80px;
-    height: 80px;
+    width: 78px;
+    height: 78px;
     margin: 0;
     padding: 0;
 }
 
 .pen-off {
     background-image: url(158467734_1144706486040471_4698769863524688849_n.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .pen-on {
     background-image: url(158292483_771467476722194_3564284464715627126_n.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .delete {
     background-image: url(Capture.PNG);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .solution {
     background-image: url(Capture2.PNG);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-#board {    
+#board {
     margin-top: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-start;
-    width: 550px;
+    width: 530px;
     height: auto;
-    position: relative;    
+    position: relative;
     justify-content: center;
 }
 
@@ -266,16 +294,162 @@ footer {
     left: 0;
     right: 0;
     height: 40px;
-    font-size: 18px;
+    font-size: 1.5vw;
     z-index: 1;
     opacity: 0.7;
     margin-top: 50px;
 }
 
 /* Dành cho điện thoại */
+@media screen and (max-width: 1200px) {
+    .menu {
+        position: absolute;
+        width: 30px;
+        height: 3px;
+        background: #fff;
+        transition: 0.3s linear;
+        border: 1px solid yellow;
+        display: block;
+    }
 
+    .menu::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        width: 30px;
+        height: 3px;
+        background: #fff;
+        transition: 0.3s linear;
+        left: -1px;
+    }
 
+    .menu::after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        width: 30px;
+        height: 3px;
+        background: #fff;
+        transition: 0.3s linear;
+        left: -1px;
+    }
 
+    .menu-section.show .menu {
+        background: none;
+    }
 
+    .menu-section.show .menu:before {
+        transform: rotate(135deg);
+        top: 0px;
+    }
 
+    .menu-section.show .menu:after {
+        transform: rotate(-135deg);
+        top: 0px;
+    }
 
+    .setup-game {
+        position: absolute;
+        width: 20%;
+        height: 100vh;
+        top: 0;
+        left: -1000px;
+        background-color: rgba(0, 31, 63, 0.95);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 7rem;
+        transition: 0.5s ease-in-out;
+    }
+
+    .setup-game.show {
+        left: 0;
+    }
+
+    .setup-game section {
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    #number-container {
+        position: absolute;
+        width: 160px;
+        top: 50%;
+        right: -70%;
+        z-index: 10;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    #number-container p {
+        border: 1px solid #49599a;
+        border-radius: 10%;
+        width: 50px;
+        height: 50px;
+        font-size: 25pt;
+        text-align: center;
+        float: left;
+        display: block;
+        line-height: 50px;
+    }
+
+    #number-option button {
+        width: 48px;
+        height: 48px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #board {
+        margin-top: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: flex-start;
+        width: 390px;
+        height: auto;
+        position: relative;
+        justify-content: center;
+    }
+    
+    .tile {
+        border: 1px solid darkred;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        margin: 0px;
+        line-height: normal;
+        vertical-align: middle;
+        font-size: 25pt;
+        position: relative;
+        z-index: 1;
+    }
+
+    .rightBorder {
+        border-right: 5px solid brown;
+        z-index: 10;
+    }
+    
+    .leftBorder {
+        border-left: 5px solid brown;
+        z-index: 10;
+    }
+    
+    .topBorder {
+        border-top: 5px solid brown;
+        z-index: 10;
+    }
+    
+    .bottomBorder {
+        border-bottom: 5px solid brown;
+        z-index: 10;
+    }
+
+    header button {
+        display: flex;
+        justify-content: left;
+        background-color: #49599a;
+        color: white;
+        font-size: 20px;
+    }
+
+}
